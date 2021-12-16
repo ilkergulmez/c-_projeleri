@@ -1,0 +1,83 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using MetroFramework;
+
+
+namespace TCKNsorgulamaUygulamasıV1
+{
+    public partial class Form1 : MetroFramework.Forms.MetroForm
+
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsNumber(e.KeyChar) || e.KeyChar == 8)
+            {
+                e.Handled = false;
+
+            }
+            else
+            {
+                e.Handled = true;
+
+            }
+        }
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsNumber(e.KeyChar) || e.KeyChar == 8)
+            {
+                e.Handled = false;
+
+            }
+            else
+            {
+                e.Handled = true;
+
+            }
+        }
+
+                                                         
+        private void button1_Click(object sender, EventArgs e)
+            {
+            long TCKN = long.Parse(textBox3.Text);
+            string Ad, Soyad;
+            Ad = textBox1.Text;
+            Soyad = textBox2.Text;
+            int DY = int.Parse(textBox4.Text);
+            KimlikBilgileri.KPSPublicSoapClient KK = new KimlikBilgileri.KPSPublicSoapClient();
+            bool Durum = KK.TCKimlikNoDogrula(TCKN, Ad, Soyad, DY);
+            if (Durum == true)
+            {
+                MessageBox.Show("Girilen Kimlik Bilgileri Bakanlık tarafından doğrulandı", "Geçerli durum", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            if (!Durum == true)
+            {
+                MessageBox.Show("Girilen Kimlik Bilgileri Bakanlık tarafından doğrulanamadı!!!", "Geçersiz Durum yada sahte kimlik", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+            }
+
+
+                                 
+            }
+
+        
+        }
+    }
+
